@@ -13,8 +13,8 @@ public class StringCalculator {
 	 * Constants
 	 */
 
-    private final String ONE_DIGIT_OR_MORE_REG_EX = "-?\\d+";
-
+	private static final String ONE_DIGIT_OR_MORE_REG_EX = "-?\\d+";
+	private static final Pattern numberPattern = Pattern.compile(ONE_DIGIT_OR_MORE_REG_EX);
 
 	/*
 	 * Public methods
@@ -28,43 +28,47 @@ public class StringCalculator {
 	 * @return the sum value with some restrictions described in the project
 	 *         documentation.
 	 */
-    public int add(final String numbers) throws NegativeNumbersNotSupportedException {
-        List<Integer> numberList = extractNumberList(numbers);
-        checkIfThereAreNegativeNumbers(numberList);
-        return sumNumbers(numberList);
+	public int add(final String numbers) throws NegativeNumbersNotSupportedException {
+		List<Integer> numberList = extractNumberList(numbers);
+		checkIfThereAreNegativeNumbers(numberList);
+		return sumNumbers(numberList);
 	}
 
 	/*
 	 * Auxiliary methods
 	 */
 
-    private void checkIfThereAreNegativeNumbers(List<Integer> numberList) throws NegativeNumbersNotSupportedException {
-        List<Integer> negativeNumbers = new LinkedList<Integer>();
-        for (Integer num : numberList) {
-            if (num < 0) {
-                negativeNumbers.add(num);
-            }
-        }
-        if (negativeNumbers.size() > 0) {
-            throw new NegativeNumbersNotSupportedException(negativeNumbers);
-        }
-    }
+	private void checkIfThereAreNegativeNumbers(List<Integer> numberList) throws NegativeNumbersNotSupportedException {
+		List<Integer> negativeNumbers = new LinkedList<Integer>();
+		for (Integer num : numberList) {
+			if (num < 0) {
+				negativeNumbers.add(num);
+			}
+		}
+		if (negativeNumbers.size() > 0) {
+			throw new NegativeNumbersNotSupportedException(negativeNumbers);
+		}
+	}
 
 	private List<Integer> extractNumberList(String numbers) {
 		List<Integer> result = new LinkedList<Integer>();
-		if (!numbers.isEmpty()) {            
+		if (!numbers.isEmpty()) {
 			result = getNumbersUsingRegEx(numbers);
 		}
 		return result;
 	}
 
 	private List<Integer> getNumbersUsingRegEx(String string) {
+		Matcher matcher = numberPattern.matcher(string);
+		return extractNumbersFromMatcher(matcher);
+	}
+
+	private LinkedList<Integer> extractNumbersFromMatcher(Matcher matcher) {
+
 		LinkedList<Integer> numbers = new LinkedList<Integer>();
 
-		Pattern p = Pattern.compile(ONE_DIGIT_OR_MORE_REG_EX);
-		Matcher m = p.matcher(string);
-		while (m.find()) {
-			int number = Integer.parseInt(m.group());
+		while (matcher.find()) {
+			int number = Integer.parseInt(matcher.group());
 			numbers.add(number);
 		}
 		return numbers;
