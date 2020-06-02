@@ -19,6 +19,7 @@ public class StringCalculatorTest
     private static final String ONE_NUMBER_ONE_DIGIT_STRING = "1";
     private static final String ONE_NUMBER_STRING = "11";
     private static final String FOUR_NUMBERS_STRING_SUM_ELEVEN = "1,2,3,5";
+    private static final String FOUR_NUMBERS_STRING_SUM_SIX_SEPARATOR_NEW_LINE = "1\n2,3";
 
 
     /*
@@ -67,6 +68,13 @@ public class StringCalculatorTest
         int result = stringCalculator.add(FOUR_NUMBERS_STRING_SUM_ELEVEN);
 
         assertEquals(11, result);
+    }
+    
+    @Test
+    public void shouldReturnTheSumofAnUnknownAmountOfNumbersSeparatedWithNewLineCharacters() {
+        int result = stringCalculator.add(FOUR_NUMBERS_STRING_SUM_SIX_SEPARATOR_NEW_LINE);
+
+        assertEquals(6, result);
     }
     
 }
