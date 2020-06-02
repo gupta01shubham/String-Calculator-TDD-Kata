@@ -28,19 +28,8 @@ public class StringCalculator {
 	 *         documentation.
 	 */
 	public int add(final String numbers) {
-		int result = 0;
-		if (!numbers.isEmpty()) {
-			List<Integer> numberList = new LinkedList<Integer>();
-			if (onlyContainsOneNumber(numbers)) {
-				result = Integer.parseInt(numbers);
-			} else {
-				numberList = extractNumberList(numbers);
-			}
-			if (!numberList.isEmpty()) {
-				result = sumNumbers(numberList);
-			}
-		}
-		return result;
+        List<Integer> numberList = extractNumberList(numbers);
+        return sumNumbers(numberList);
 	}
 
 	/*
