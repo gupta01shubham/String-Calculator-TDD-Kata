@@ -13,7 +13,8 @@ public class StringCalculator {
 	 * Constants
 	 */
 
-	private final String ONE_DIGIT_OR_MORE_REG_EX = "\\d+";
+    private final String ONE_DIGIT_OR_MORE_REG_EX = "-?\\d+";
+
 
 	/*
 	 * Public methods
@@ -27,8 +28,9 @@ public class StringCalculator {
 	 * @return the sum value with some restrictions described in the project
 	 *         documentation.
 	 */
-	public int add(final String numbers) {
+    public int add(final String numbers) throws NegativeNumbersNotSupportedException {
         List<Integer> numberList = extractNumberList(numbers);
+        checkIfThereAreNegativeNumbers(numberList);
         return sumNumbers(numberList);
 	}
 
@@ -36,7 +38,17 @@ public class StringCalculator {
 	 * Auxiliary methods
 	 */
 
-
+    private void checkIfThereAreNegativeNumbers(List<Integer> numberList) throws NegativeNumbersNotSupportedException {
+        List<Integer> negativeNumbers = new LinkedList<Integer>();
+        for (Integer num : numberList) {
+            if (num < 0) {
+                negativeNumbers.add(num);
+            }
+        }
+        if (negativeNumbers.size() > 0) {
+            throw new NegativeNumbersNotSupportedException(negativeNumbers);
+        }
+    }
 
 	private List<Integer> extractNumberList(String numbers) {
 		List<Integer> result = new LinkedList<Integer>();

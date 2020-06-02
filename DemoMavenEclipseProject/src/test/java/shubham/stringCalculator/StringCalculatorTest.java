@@ -21,7 +21,10 @@ public class StringCalculatorTest
     private static final String FOUR_NUMBERS_STRING_SUM_ELEVEN = "1,2,3,5";
     private static final String FOUR_NUMBERS_STRING_SUM_SIX_SEPARATOR_NEW_LINE = "1\n2,3";
     private static final String FOUR_NUMBERS_STRING_SUM_SEVEN_DIFFERENT_SEPARATORS = "//;\n1;2p4";
-    
+    private static final String NUMBERS_STRING_SUM_ELEVEN = "1,2,3,5";
+    private static final String NUMBERS_STRING_SUM_SIX_SEPARATOR_NEW_LINE = "1\n2,3";
+    private static final String NUMBERS_STRING_SUM_SEVEN_DIFFERENT_SEPARATORS = "//;\n1;2p4";
+    private static final String NUMBERS_STRING_WITH_NEGATIVE_VALUES = "//;\n1;2p-4";
 
     /*
      * Test data
@@ -43,13 +46,13 @@ public class StringCalculatorTest
      */
 
     @Test
-    public void shouldReturnZeroIfTheArgumentIsEmpty() {
+    public void shouldReturnZeroIfTheArgumentIsEmpty() throws NegativeNumbersNotSupportedException {
         int result = stringCalculator.add(EMPTY_SET_OF_NUMBERS);
         assertEquals(0, result);
     }
     
     @Test
-    public void shouldReturnTheSameValueifTheArgumentContainsOnlyOneNumberWithOneDigit() {
+    public void shouldReturnTheSameValueifTheArgumentContainsOnlyOneNumberWithOneDigit() throws NegativeNumbersNotSupportedException {
         int result = stringCalculator.add(ONE_NUMBER_ONE_DIGIT_STRING);
 
         int expectedResult = Integer.parseInt(ONE_NUMBER_ONE_DIGIT_STRING);
@@ -57,7 +60,7 @@ public class StringCalculatorTest
     }
 
     @Test
-    public void shouldReturnTheSameValueIfTheArgumentContainisOnlyOneNumberWithMoreThanOneDigit() {
+    public void shouldReturnTheSameValueIfTheArgumentContainisOnlyOneNumberWithMoreThanOneDigit() throws NegativeNumbersNotSupportedException {
         int result = stringCalculator.add(ONE_NUMBER_STRING);
 
         int expectedResult = Integer.parseInt(ONE_NUMBER_STRING);
@@ -65,24 +68,28 @@ public class StringCalculatorTest
     }
     
     @Test
-    public void shoulReturnTheSumOfAnUnknownAmountOfNumbers() {
-        int result = stringCalculator.add(FOUR_NUMBERS_STRING_SUM_ELEVEN);
-
+    public void shouldReturnTheSumOfAnUnknownAmountOfNumbers() throws NegativeNumbersNotSupportedException {
+        int result = stringCalculator.add(NUMBERS_STRING_SUM_ELEVEN);
         assertEquals(11, result);
     }
     
     @Test
-    public void shouldReturnTheSumofAnUnknownAmountOfNumbersSeparatedWithNewLineCharacters() {
-        int result = stringCalculator.add(FOUR_NUMBERS_STRING_SUM_SIX_SEPARATOR_NEW_LINE);
+    public void shouldReturnTheSumOfAnUnknownAmountOfNumbersSeparatedWithNewLineCharacters() throws NegativeNumbersNotSupportedException {
+        int result = stringCalculator.add(NUMBERS_STRING_SUM_SIX_SEPARATOR_NEW_LINE);
 
         assertEquals(6, result);
     }
     
     @Test
-    public void shouldReturnTheSumOfAnUnknownAmoutOfNumbersSeparatedWithDifferentDelimiters() {
-        int result = stringCalculator.add(FOUR_NUMBERS_STRING_SUM_SEVEN_DIFFERENT_SEPARATORS);
-
+    public void shouldReturnTheSumOfAnUnknownAmoutOfNumbersSeparatedWithDifferentDelimiters() throws NegativeNumbersNotSupportedException {
+        int result = stringCalculator.add(NUMBERS_STRING_SUM_SEVEN_DIFFERENT_SEPARATORS);
+        
         assertEquals(7, result);
+    }
+    
+    @Test(expected = NegativeNumbersNotSupportedException.class)
+    public void shouldThrowNegativeNumbersNotSupportedException() throws NegativeNumbersNotSupportedException {
+        stringCalculator.add(NUMBERS_STRING_WITH_NEGATIVE_VALUES);
     }
     
 }
