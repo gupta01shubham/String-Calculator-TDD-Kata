@@ -36,19 +36,12 @@ public class StringCalculator {
 	 * Auxiliary methods
 	 */
 
-	private boolean onlyContainsOneNumber(final String numbers) {
-		return numbers.matches(ONE_DIGIT_OR_MORE_REG_EX);
-	}
+
 
 	private List<Integer> extractNumberList(String numbers) {
 		List<Integer> result = new LinkedList<Integer>();
-		if (!numbers.isEmpty()) {
-			if (onlyContainsOneNumber(numbers)) {
-				int number = Integer.parseInt(numbers);
-				result.add(number);
-			} else {
-				result = getNumbersUsingRegEx(numbers);
-			}
+		if (!numbers.isEmpty()) {            
+			result = getNumbersUsingRegEx(numbers);
 		}
 		return result;
 	}
