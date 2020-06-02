@@ -1,7 +1,5 @@
 package shubham.stringCalculator;
 
-
-
 //@author Shubham Gupta
 
 public class StringCalculator {
@@ -15,6 +13,9 @@ public class StringCalculator {
 	 *         documentation.
 	 */
 	public int add(String numbers) {
-		return -1;
+		int result = 0;
+		if (!numbers.isEmpty()) {
+		}
+		return result;
 	}
 }
